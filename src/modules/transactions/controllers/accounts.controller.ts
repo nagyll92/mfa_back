@@ -32,7 +32,6 @@ export class AccountsController {
     @Get()
     @Provides(ListAccountsDto)
     findAll(): Promise<ListAccountsDto[]> {
-        console.log('listing accounts');
         return this.accountService.findAll();
     }
 
