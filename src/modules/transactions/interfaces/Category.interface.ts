@@ -1,4 +1,4 @@
-import { TransactionTypeENUM } from '../../../shared/enums/TransactionTypeENUM';
+import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
 
 export class ICategory {
 
@@ -7,4 +7,6 @@ export class ICategory {
   icon: string;
 
   type: TransactionTypeENUM;
+
+  parent?: any;
 }

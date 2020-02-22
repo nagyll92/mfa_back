@@ -14,4 +14,8 @@ export class CreateCategoryDto implements ICategory {
 
     @IsEnum(TransactionTypeENUM)
     readonly type: TransactionTypeENUM;
+
+    @IsString()
+    @IsOptional()
+    readonly parent: string;
 }

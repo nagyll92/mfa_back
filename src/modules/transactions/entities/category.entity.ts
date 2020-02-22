@@ -20,4 +20,6 @@ export class Category extends EntityBoilerplate<ICategory, Category> implements 
   })
   type: TransactionTypeENUM = undefined;
 
+  @Column({ nullable: true })
+  parent: string = undefined;
 }

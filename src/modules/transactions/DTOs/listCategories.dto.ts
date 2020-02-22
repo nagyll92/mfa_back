@@ -11,4 +11,7 @@ export class ListCategoriesDto implements ICategory {
 
   @Expose()
   type: TransactionTypeENUM;
+
+  @Expose()
+  parent: string;
 }

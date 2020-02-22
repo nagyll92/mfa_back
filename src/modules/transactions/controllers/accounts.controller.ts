@@ -52,7 +52,7 @@ export class AccountsController {
 
     @Delete(':accountName')
     async deleteAccount(@Param('accountName', AccountExistsValidator) accountName: string) {
-        await this.accountService.delete(accountName);
+        return await this.accountService.delete(accountName);
     }
 
     @Put(':accountName/transfer')

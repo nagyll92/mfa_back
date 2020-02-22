@@ -24,13 +24,18 @@ export class AccountService {
         let expenseTransaction: Transaction = new Transaction();
         expenseTransaction = expenseTransaction.mapObjects({
             account: from,
-            category: SystemTransactionCategoriesENUM.EXPENSE_TRANSFER, ...transferMapper
+            category: SystemTransactionCategoriesENUM.EXPENSE_TRANSFER,
+            targetAccount: to,
+            ...transferMapper
+
         }, expenseTransaction);
 
         let incomeTransaction: Transaction = new Transaction();
         incomeTransaction = incomeTransaction.mapObjects({
             account: to,
-            category: SystemTransactionCategoriesENUM.INCOME_TRANSFER, ...transferMapper
+            category: SystemTransactionCategoriesENUM.INCOME_TRANSFER,
+            targetAccount: from,
+            ...transferMapper
         }, incomeTransaction);
 
         await this.entityManager.save([incomeTransaction, expenseTransaction]);
