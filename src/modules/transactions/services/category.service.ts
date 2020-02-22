@@ -19,8 +19,14 @@ export class CategoryService implements OnApplicationBootstrap {
   ) {
   }
 
-  public async findAll(): Promise<ICategory[]> {
-    return await this.categoryRepository.find({ type: Not(TransactionTypeENUM.SYSTEM) });
+  public async findAll(type?: TransactionTypeENUM): Promise<ICategory[]> {
+    let filter;
+    if (type) {
+      filter = { type };
+    } else {
+      filter = { type: Not(TransactionTypeENUM.SYSTEM) };
+    }
+    return await this.categoryRepository.find(filter);
   }
 
   public async findOne(categoryName: string): Promise<ICategory> {
@@ -38,7 +44,9 @@ export class CategoryService implements OnApplicationBootstrap {
   }
 
   public async delete(categoryName: string) {
-    return await this.categoryRepository.delete(categoryName);
+    await this.categoryRepository.delete(categoryName);
+    await this.categoryRepository.update({ parent: categoryName }, { parent: null });
+
   }
 
   @CatchDBExceptions

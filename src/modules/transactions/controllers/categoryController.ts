@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Query, UseInterceptors } from '@nestjs/common';
 import { TransformProvidedInterceptor } from 'shared/interceptors/transformProvided.interceptor';
 import { Provides } from 'shared/decorators/provides.decorator';
 
@@ -8,6 +8,7 @@ import { ListCategoriesDto } from '../DTOs/listCategories.dto';
 import { CreateCategoryDto } from '../DTOs/createCategory.dto';
 import { AppLogger } from 'utils/logger/logger';
 import { GetCategoryDto } from '../DTOs/getCategory.dto';
+import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
 
 @Controller('categories')
 @UseInterceptors(TransformProvidedInterceptor)
@@ -20,8 +21,8 @@ export class CategoryController {
 
   @Get()
   @Provides(ListCategoriesDto)
-  findAll(): Promise<ICategory[]> {
-    return this.categoriesService.findAll();
+  findAll(@Query('type') type: TransactionTypeENUM): Promise<ICategory[]> {
+    return this.categoriesService.findAll(type);
   }
 
   @Get(':categoryName')

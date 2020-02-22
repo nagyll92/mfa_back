@@ -4,7 +4,7 @@ import { IsDateString, IsNotEmpty, MinLength } from 'class-validator';
 export class UpdateAccountDto implements IAccount {
 
     @IsNotEmpty()
-    @MinLength(2)
+    @MinLength(4)
     name: string;
 
     @IsNotEmpty()
