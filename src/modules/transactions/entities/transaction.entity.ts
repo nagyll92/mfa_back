@@ -6,26 +6,26 @@ import { SystemTransactionCategoriesENUM } from 'shared/enums/SystemTransactionC
 
 @Entity('transactions')
 export class Transaction extends EntityBoilerplate<ITransaction, Transaction> implements ITransaction {
-    @PrimaryGeneratedColumn()
-    id: number = undefined;
+  @PrimaryGeneratedColumn()
+  id: number = undefined;
 
-    @Column({ type: 'datetime' })
-    dateTime: string = undefined;
+  @Column({ type: 'datetime' })
+  dateTime: string = undefined;
 
-    @Column({nullable: true})
-    account: string = undefined;
+  @Column({ nullable: true })
+  account: string = undefined;
 
-    @Column({ type: 'float' })
-    amount: number = undefined;
+  @Column({ type: 'float' })
+  amount: number = undefined;
 
-    @Column({ length: 500 })
-    description: string = undefined;
+  @Column({ length: 500 })
+  description: string = undefined;
 
-    @ManyToOne(() => Category)
-    @JoinColumn({ name: 'category', referencedColumnName: 'name' })
-    @Column()
-    category: Category | SystemTransactionCategoriesENUM = undefined;
+  @ManyToOne(() => Category)
+  @JoinColumn({ name: 'category', referencedColumnName: 'name' })
+  @Column()
+  category: Category | SystemTransactionCategoriesENUM | string = undefined;
 
-    @Column({nullable: true})
-    targetAccount: string = undefined;
+  @Column({ nullable: true })
+  reference: string = undefined;
 }

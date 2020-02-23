@@ -1,5 +1,6 @@
 import { ITransaction } from '../interfaces/Transaction.interface';
 import { Expose } from 'class-transformer';
+import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
 
 export class ListTransactionsDto implements ITransaction {
 
@@ -8,6 +9,9 @@ export class ListTransactionsDto implements ITransaction {
 
   @Expose()
   account: string;
+
+  @Expose()
+  type: TransactionTypeENUM;
 
   @Expose()
   amount: number;
@@ -22,5 +26,5 @@ export class ListTransactionsDto implements ITransaction {
   description: string;
 
   @Expose()
-  targetAccount: string;
+  reference: string;
 }

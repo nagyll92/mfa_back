@@ -5,5 +5,5 @@ export class ITransaction {
   category: any;
   amount: number;
   description: string;
-  targetAccount?: string;
+  reference?: string;
 }
