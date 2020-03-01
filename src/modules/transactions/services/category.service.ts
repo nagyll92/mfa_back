@@ -8,6 +8,7 @@ import { CreateCategoryDto } from '../DTOs/createCategory.dto';
 import { ICategory } from '../interfaces/Category.interface';
 import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
 import { SystemTransactionCategoriesENUM } from 'shared/enums/SystemTransactionCategoriesENUM';
+import { Transaction } from '../entities/transaction.entity';
 
 @Injectable()
 export class CategoryService implements OnApplicationBootstrap {
@@ -26,7 +27,29 @@ export class CategoryService implements OnApplicationBootstrap {
     } else {
       filter = { type: Not(TransactionTypeENUM.SYSTEM) };
     }
-    return await this.categoryRepository.find(filter);
+
+    const query = this.categoryRepository
+      .createQueryBuilder('c')
+      .addSelect('c.*')
+      .addSelect('SUM(t.amount)', 'amount')
+      .leftJoin(Transaction, 't', 'c.name = t.category')
+      .andWhere('c.type != :system', { system: TransactionTypeENUM.SYSTEM })
+      .groupBy('c.name');
+
+    if (type) {
+      query.andWhere('c.type = :filterType', { filterType: type });
+    }
+    return await query.getRawMany().then(categories => {
+      categories.forEach(category => {
+        if (category.amount === null) {
+          category.amount = 0;
+        }
+        categories.filter(cat => cat.parent === category.name).forEach(subCat => {
+          category.amount += (subCat.amount !== null ? subCat.amount : 0);
+        });
+      });
+      return categories;
+    });
   }
 
   public async findOne(categoryName: string): Promise<ICategory> {

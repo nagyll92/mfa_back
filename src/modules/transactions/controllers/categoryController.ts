@@ -9,6 +9,9 @@ import { CreateCategoryDto } from '../DTOs/createCategory.dto';
 import { AppLogger } from 'utils/logger/logger';
 import { GetCategoryDto } from '../DTOs/getCategory.dto';
 import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
+import { ITransaction } from '../interfaces/Transaction.interface';
+import { CategoryTransactionsDto } from '../DTOs/categoryTransactions.dto';
+import { TransactionService } from '../services/transaction.service';
 
 @Controller('categories')
 @UseInterceptors(TransformProvidedInterceptor)
@@ -16,6 +19,7 @@ export class CategoryController {
 
   constructor(
     private categoriesService: CategoryService,
+    private transactionService: TransactionService
   ) {
   }
 
@@ -33,6 +37,12 @@ export class CategoryController {
       throw new NotFoundException();
     }
     return category;
+  }
+
+  @Get(':categoryName/transactions')
+  @Provides(CategoryTransactionsDto)
+  async getTransactions(@Param('categoryName') categoryName: string): Promise<ITransaction> {
+    return this.transactionService.getTransactionsForCategory(categoryName);
   }
 
   @Post()

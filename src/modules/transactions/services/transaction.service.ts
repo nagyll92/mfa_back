@@ -30,6 +30,15 @@ export class TransactionService {
       .getRawOne();
   }
 
+  public async getTransactionsForCategory(categoryName: string): Promise<any> {
+    const query = this.transactionRepository.createQueryBuilder('t')
+      .select('t.*, c.type, c.icon, c.name, c.parent')
+      .leftJoin(Category, 'c', 't.category = c.name')
+      .where('c.name = :name', { name: categoryName })
+      .orWhere('c.parent = :name', { name: categoryName });
+    return query.getRawMany();
+  }
+
   public async updateTransaction(transactionId: number, transaction: CreateTransactionDto): Promise<any> {
     return await this.transactionRepository.update({ id: transactionId }, transaction);
   }
@@ -57,7 +66,7 @@ export class TransactionService {
     if (queryParams.untilDate) {
       query.andWhere('dateTime <= :untilDate', { untilDate: queryParams.untilDate });
     }
-    query.andWhere('c.type != :type', {type: 'SYSTEM'});
+    query.andWhere('c.type != :type', { type: 'SYSTEM' });
 
     return await query.getRawMany();
   }
