@@ -1,3 +1,4 @@
+/*
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { Transaction } from '../entities/transaction.entity';
@@ -114,3 +115,4 @@ export class AccountService {
     return this.entityManager.save(createAccountTransaction);
   }
 }
+*/

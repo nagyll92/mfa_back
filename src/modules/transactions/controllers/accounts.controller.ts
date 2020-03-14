@@ -70,7 +70,7 @@ export class AccountsController {
       @Param('fromAccount', AccountExistsValidator) fromAccount: string,
       @Param('toAccount', AccountExistsValidator) toAccount: string,
       @Body() transfer: TransferBetweenAccountsDto) {
-        throw new NotImplementedException();
-        // return this.accountService.transferAmount(accountName, transfer.toAccount, transfer.amount, transfer.description, transfer.dateTime);
+
+        return this.accountService.transferAmount(fromAccount, toAccount, transfer.amount, transfer.description, transfer.dateTime);
     }
 }

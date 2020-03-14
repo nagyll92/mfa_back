@@ -11,11 +11,13 @@ import { AccountService } from './services/account.service';
 import { AccountModel } from './models/account.model';
 import { Account } from './entities/account.entity';
 import { CategoryModel } from './models/category.model';
+import { TransactionModel } from './models/transaction.model';
+import { Split } from './entities/split.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Transaction, Category, Account])],
+    imports: [TypeOrmModule.forFeature([Transaction, Category, Account, Transaction, Split])],
     controllers: [TransactionController, CategoryController, AccountsController],
-    providers: [TransactionService, CategoryService, AccountService, AccountModel, CategoryModel],
+    providers: [TransactionService, CategoryService, AccountService, AccountModel, CategoryModel, TransactionModel],
 })
 export class TransactionsModule {
 }

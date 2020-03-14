@@ -32,15 +32,15 @@ export class CreateTransactionValidator implements PipeTransform<Transaction> {
   }
 
   private async accountExists(account: string): Promise<boolean> {
-    const accounts = await this.transactionRepository.find({ account });
-    return accounts.length !== 0;
-
+    /*const accounts = await this.transactionRepository.find({ account });
+    return accounts.length !== 0;*/
+    return true;
   }
 
   private async categoryExists(category: string): Promise<boolean> {
-
-    const categories = await this.categoryRepository.find({ name: category });
-    return categories.length !== 0;
+    return true;
+    /*const categories = await this.categoryRepository.find({ name: category });
+    return categories.length !== 0;*/
 
   }
 

@@ -7,6 +7,11 @@ import { ListTransactionsDto } from '../DTOs/listTransactions.dto';
 import { CreateTransactionDto } from '../DTOs/createTransaction.dto';
 import { CreateTransactionValidator } from '../validators/transaction/CreateTransaction.validator';
 
+
+@Controller('transactions')
+export class TransactionController {}
+/*
+
 @Controller('transactions')
 @UseInterceptors(TransformProvidedInterceptor)
 export class TransactionController {
@@ -50,3 +55,4 @@ export class TransactionController {
     await this.transactionService.deleteTransaction(transactionId);
   }
 }
+*/
