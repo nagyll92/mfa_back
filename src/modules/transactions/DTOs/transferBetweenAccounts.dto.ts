@@ -7,9 +7,6 @@ export class TransferBetweenAccountsDto {
     description: string;
 
     @IsNotEmpty()
-    toAccount: string;
-
-    @IsNotEmpty()
     amount: number;
 
     @IsDateString()

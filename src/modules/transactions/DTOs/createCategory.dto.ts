@@ -1,6 +1,7 @@
 import { IsEnum, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
 import { ICategory } from '../interfaces/Category.interface';
 import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
+import { CategoryTypesENUM } from 'shared/enums/AccountTypesENUM';
 
 export class CreateCategoryDto implements ICategory {
 
@@ -13,8 +14,8 @@ export class CreateCategoryDto implements ICategory {
   @IsOptional()
   readonly icon: string;
 
-  @IsEnum(TransactionTypeENUM)
-  readonly type: TransactionTypeENUM;
+  @IsEnum(['INCOME', 'EXPENSE'])
+  readonly type: CategoryTypesENUM;
 
   @IsString()
   @IsOptional()

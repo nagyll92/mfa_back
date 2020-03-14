@@ -4,7 +4,7 @@ import { EntityBoilerplate } from 'shared/boilerplates/Entity.boilerplate';
 import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
 
 @Entity('categories')
-export class Category extends EntityBoilerplate<ICategory, Category> implements ICategory {
+export class Category /*extends EntityBoilerplate<ICategory, Category> implements ICategory*/ {
 
   @PrimaryColumn()
   @Index('name', { unique: true })
@@ -13,12 +13,12 @@ export class Category extends EntityBoilerplate<ICategory, Category> implements 
   @Column({ length: 500, nullable: true })
   icon: string = undefined;
 
-  @Column({
+  /*@Column({
     type: 'enum',
     enum: TransactionTypeENUM,
     default: TransactionTypeENUM.EXPENSE,
   })
-  type: TransactionTypeENUM = undefined;
+  type: TransactionTypeENUM = undefined;*/
 
   @Column({ nullable: true })
   parent: string = undefined;

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Query, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, NotImplementedException, Param, Post, Put, Query, UseInterceptors } from '@nestjs/common';
 import { TransformProvidedInterceptor } from 'shared/interceptors/transformProvided.interceptor';
 import { Provides } from 'shared/decorators/provides.decorator';
 
@@ -6,57 +6,55 @@ import { CategoryService } from '../services/category.service';
 import { ICategory } from '../interfaces/Category.interface';
 import { ListCategoriesDto } from '../DTOs/listCategories.dto';
 import { CreateCategoryDto } from '../DTOs/createCategory.dto';
-import { AppLogger } from 'utils/logger/logger';
 import { GetCategoryDto } from '../DTOs/getCategory.dto';
-import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
 import { ITransaction } from '../interfaces/Transaction.interface';
 import { CategoryTransactionsDto } from '../DTOs/categoryTransactions.dto';
-import { TransactionService } from '../services/transaction.service';
+import { CategoryTypesENUM } from 'shared/enums/AccountTypesENUM';
 
 @Controller('categories')
 @UseInterceptors(TransformProvidedInterceptor)
 export class CategoryController {
 
-  constructor(
-    private categoriesService: CategoryService,
-    private transactionService: TransactionService
-  ) {
-  }
-
-  @Get()
-  @Provides(ListCategoriesDto)
-  findAll(@Query('type') type: TransactionTypeENUM): Promise<ICategory[]> {
-    return this.categoriesService.findAll(type);
-  }
-
-  @Get(':categoryName')
-  @Provides(GetCategoryDto)
-  async findOne(@Param('categoryName') categoryName: string): Promise<ICategory> {
-    const category = await this.categoriesService.findOne(categoryName);
-    if (category === null) {
-      throw new NotFoundException();
+    constructor(
+      private categoriesService: CategoryService,
+    ) {
     }
-    return category;
-  }
 
-  @Get(':categoryName/transactions')
-  @Provides(CategoryTransactionsDto)
-  async getTransactions(@Param('categoryName') categoryName: string): Promise<ITransaction> {
-    return this.transactionService.getTransactionsForCategory(categoryName);
-  }
+    @Get()
+    @Provides(ListCategoriesDto)
+    findAll(@Query('type') type: CategoryTypesENUM): Promise<ICategory[]> {
+        return this.categoriesService.findAll(type);
+    }
 
-  @Post()
-  createCategory(@Body() category: CreateCategoryDto) {
-    return this.categoriesService.createCategory(category);
-  }
+    @Get(':categoryName')
+    @Provides(GetCategoryDto)
+    async findOne(@Param('categoryName') categoryName: string): Promise<ICategory> {
+        const category = await this.categoriesService.findOne(categoryName);
+        if (category === null) {
+            throw new NotFoundException();
+        }
+        return category;
+    }
 
-  @Delete(':categoryName')
-  async deleteCategory(@Param('categoryName') categoryName: string) {
-    return await this.categoriesService.delete(categoryName);
-  }
+    @Get(':categoryName/transactions')
+    @Provides(CategoryTransactionsDto)
+    async getTransactions(@Param('categoryName') categoryName: string): Promise<ITransaction> {
+        throw new NotImplementedException();
+        // return this.transactionService.getTransactionsForCategory(categoryName);
+    }
 
-  @Put(':categoryName')
-  async updateCategory(@Param('categoryName') categoryName: string, @Body() category: CreateCategoryDto) {
-    return await this.categoriesService.update(categoryName, category);
-  }
+    @Post()
+    createCategory(@Body() category: CreateCategoryDto) {
+        return this.categoriesService.createCategory(category);
+    }
+
+    @Delete(':categoryName')
+    async deleteCategory(@Param('categoryName') categoryName: string) {
+        return await this.categoriesService.delete(categoryName);
+    }
+
+    @Put(':categoryName')
+    async updateCategory(@Param('categoryName') categoryName: string, @Body() category: CreateCategoryDto) {
+        return await this.categoriesService.update(categoryName, category);
+    }
 }

@@ -4,11 +4,11 @@ import {
     Controller,
     Delete,
     Get,
-    NotFoundException,
+    NotFoundException, NotImplementedException,
     Param,
     Post,
     Put,
-    UseInterceptors
+    UseInterceptors,
 } from '@nestjs/common';
 import { TransformProvidedInterceptor } from 'shared/interceptors/transformProvided.interceptor';
 import { AccountService } from '../services/account.service';
@@ -25,7 +25,7 @@ import { AccountExistsValidator } from '../validators/account/AccountExists.vali
 @UseInterceptors(TransformProvidedInterceptor)
 export class AccountsController {
     constructor(
-        private accountService: AccountService
+      private accountService: AccountService,
     ) {
     }
 
@@ -38,6 +38,7 @@ export class AccountsController {
     @Get(':accountName')
     @Provides(GetAccountDto)
     async findOne(@Param('accountName') accountName: string): Promise<IAccount> {
+
         const account = await this.accountService.findOne(accountName);
         if (!account) {
             throw new NotFoundException();
@@ -55,17 +56,21 @@ export class AccountsController {
         return await this.accountService.delete(accountName);
     }
 
-    @Put(':accountName/transfer')
-    transferBetweenAccounts(@Param('accountName', AccountExistsValidator) accountName: string, @Body() transfer: TransferBetweenAccountsDto) {
-        return this.accountService.transferAmount(accountName, transfer.toAccount, transfer.amount, transfer.description, transfer.dateTime);
-    }
-
     @Post()
     async createAccount(@Body() accountDto: CreateAccountDto) {
         const account = await this.accountService.createAccount(accountDto);
         if (account === null) {
             throw new BadRequestException('Account exists');
         }
-        return account;
+        return accountDto;
+    }
+
+    @Put(':fromAccount/transfer/:toAccount')
+    transferBetweenAccounts(
+      @Param('fromAccount', AccountExistsValidator) fromAccount: string,
+      @Param('toAccount', AccountExistsValidator) toAccount: string,
+      @Body() transfer: TransferBetweenAccountsDto) {
+        throw new NotImplementedException();
+        // return this.accountService.transferAmount(accountName, transfer.toAccount, transfer.amount, transfer.description, transfer.dateTime);
     }
 }

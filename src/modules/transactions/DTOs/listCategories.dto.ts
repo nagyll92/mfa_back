@@ -1,6 +1,7 @@
 import { Expose } from 'class-transformer';
 import { ICategory } from '../interfaces/Category.interface';
 import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
+import { CategoryTypesENUM } from 'shared/enums/AccountTypesENUM';
 
 export class ListCategoriesDto implements ICategory {
   @Expose()
@@ -10,7 +11,7 @@ export class ListCategoriesDto implements ICategory {
   icon: string;
 
   @Expose()
-  type: TransactionTypeENUM;
+  type: CategoryTypesENUM;
 
   @Expose()
   parent: string;

@@ -4,6 +4,6 @@ export class ListAccountsDto {
     @Expose()
     name: string;
 
-    @Expose()
-    balance: number;
+    /*@Expose()
+    balance: number;*/
 }
