@@ -9,7 +9,19 @@ import { CreateTransactionValidator } from '../validators/transaction/CreateTran
 
 
 @Controller('transactions')
-export class TransactionController {}
+@UseInterceptors(TransformProvidedInterceptor)
+export class TransactionController {
+    constructor(
+      private transactionService: TransactionService,
+    ) {
+    }
+
+    @Post()
+    @UsePipes(CreateTransactionValidator)
+    createTransaction(@Body() transaction: CreateTransactionDto) {
+        return this.transactionService.createTransaction(transaction);
+    }
+}
 /*
 
 @Controller('transactions')

@@ -17,5 +17,5 @@ export class ListCategoriesDto implements ICategory {
   parent: string;
 
   @Expose()
-  amount?: number;
+  balance?: number;
 }

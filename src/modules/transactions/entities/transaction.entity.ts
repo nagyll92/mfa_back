@@ -12,7 +12,4 @@ export class Transaction extends EntityBoilerplate<ITransaction, Transaction> im
 
     @Column({ length: 500 })
     description: string = undefined;
-
-    @Column({ type: 'float', default: 0 })
-    amount: number = 0;
 }

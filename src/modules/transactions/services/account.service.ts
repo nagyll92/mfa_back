@@ -49,7 +49,6 @@ export class AccountService {
     public async transferAmount(from: string, to: string, amount: number, description: string, date: string) {
         const transaction: ITransaction = {
             dateTime: date,
-            amount,
             description,
         };
 

@@ -29,4 +29,7 @@ export class Split extends EntityBoilerplate<ISplit, Split> implements ISplit {
         default: TransactionTypeENUM.CREDIT,
     })
     type: TransactionTypeENUM = undefined;
+
+    @Column({ length: 500, nullable: true })
+    memo: string = undefined;
 }

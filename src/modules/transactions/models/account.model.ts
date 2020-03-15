@@ -58,24 +58,14 @@ export class AccountModel {
           .groupBy('a.name')
           .where({ type: In(['CURRENT']) });
 
-        /*
-        return this.transactionRepository
-      .createQueryBuilder('t')
-      .select('t.account', 'name')
-      .addSelect(`SUM(IF (c.type = 'INCOME' OR (c.type = 'SYSTEM'
-            AND c.name IN ('InitialBalance', 'IncomeTransfer')), t.amount, -t.amount))`, 'balance')
-      .leftJoin(Category, 'c', 't.category = c.name')
-      .groupBy('t.account')
-      .getRawMany().then(results => {
-        return results.filter(account => account.name !== null).map(account => {
-          account.balance = parseFloat(account.balance.toFixed(2));
-          return account;
-        });
-      });
-         */
         const results = await query.getRawMany();
-        console.log('results', results);
-        return results;
+
+        return results.map(account => {
+            if (account.balance === null) {
+                account.balance = account.initialBalance;
+            }
+            return account;
+        });
     }
 
     @CatchDBExceptions

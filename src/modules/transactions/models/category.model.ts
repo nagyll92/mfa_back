@@ -5,6 +5,7 @@ import { CatchDBExceptions } from 'shared/exceptions/database.exceptions';
 import { Account } from '../entities/account.entity';
 import { ICategory } from '../interfaces/Category.interface';
 import { CategoryTypesENUM } from 'shared/enums/AccountTypesENUM';
+import { Split } from '../entities/split.entity';
 
 @Injectable()
 export class CategoryModel {
@@ -47,7 +48,7 @@ export class CategoryModel {
     }
 
     @CatchDBExceptions
-    public async findAll(type?: CategoryTypesENUM): Promise<ICategory[]> {
+    public async findAll(type?: CategoryTypesENUM): Promise<any[]> {
         const typeFilter = [];
         if (typeof type !== 'undefined') {
             typeFilter.push(type);
@@ -58,10 +59,20 @@ export class CategoryModel {
         const query = this.categoryRepository
           .createQueryBuilder('c')
           .addSelect('c.*')
+          .addSelect('c.type', 'type')
+
+          .addSelect(`0+SUM(IF(s.type = 'DEBIT', s.amount, -s.amount)) + initialBalance`, 'balance')
+          .leftJoin(Split, 's', 'c.name = s.account ')
+          .groupBy('c.name')
           .where({ type: In(typeFilter) });
 
-        const result: any[] = await query.getMany();
-        return result;
+        const result = await query.getRawMany();
+        return result.map(category => {
+            if (category.balance === null) {
+                category.balance = category.initialBalance;
+            }
+            return category;
+        });
     }
 
     @CatchDBExceptions
