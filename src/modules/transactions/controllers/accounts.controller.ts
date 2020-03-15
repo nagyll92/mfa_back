@@ -64,13 +64,4 @@ export class AccountsController {
         }
         return accountDto;
     }
-
-    @Put(':fromAccount/transfer/:toAccount')
-    transferBetweenAccounts(
-      @Param('fromAccount', AccountExistsValidator) fromAccount: string,
-      @Param('toAccount', AccountExistsValidator) toAccount: string,
-      @Body() transfer: TransferBetweenAccountsDto) {
-
-        return this.accountService.transferAmount(fromAccount, toAccount, transfer.amount, transfer.description, transfer.dateTime);
-    }
 }

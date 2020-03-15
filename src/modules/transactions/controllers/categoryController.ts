@@ -36,25 +36,18 @@ export class CategoryController {
         return category;
     }
 
-    @Get(':categoryName/transactions')
-    @Provides(CategoryTransactionsDto)
-    async getTransactions(@Param('categoryName') categoryName: string): Promise<ITransaction> {
-        throw new NotImplementedException();
-        // return this.transactionService.getTransactionsForCategory(categoryName);
-    }
-
     @Post()
     createCategory(@Body() category: CreateCategoryDto) {
         return this.categoriesService.createCategory(category);
     }
 
-    @Delete(':categoryName')
-    async deleteCategory(@Param('categoryName') categoryName: string) {
-        return await this.categoriesService.delete(categoryName);
-    }
-
     @Put(':categoryName')
     async updateCategory(@Param('categoryName') categoryName: string, @Body() category: CreateCategoryDto) {
         return await this.categoriesService.update(categoryName, category);
+    }
+
+    @Delete(':categoryName')
+    async deleteCategory(@Param('categoryName') categoryName: string) {
+        return await this.categoriesService.delete(categoryName);
     }
 }
