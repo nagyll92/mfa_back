@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
-import { EntityManager, Repository } from 'typeorm';
+import { EntityManager, In, Repository } from 'typeorm';
 import { CatchDBExceptions } from 'shared/exceptions/database.exceptions';
 import { Transaction } from '../entities/transaction.entity';
 import { Split } from '../entities/split.entity';
 import { ITransaction } from '../interfaces/Transaction.interface';
 import { ISplit } from '../interfaces/Split.interace';
+import { GetTransactionQueryParamsInterface } from '../interfaces/getTransactionQueryParams.interface';
 
 @Injectable()
 export class TransactionModel {
@@ -16,6 +17,55 @@ export class TransactionModel {
                 @InjectEntityManager()
                 private readonly entityManager: EntityManager,
     ) {
+    }
+
+    @CatchDBExceptions
+    public async findAll(filters: GetTransactionQueryParamsInterface) {
+        const transactionQuery = this.transactionRepository
+          .createQueryBuilder('t')
+          .addSelect('t.*')
+          .addSelect('s.account')
+          .leftJoin(Split, 's', 's.transactionId = t.id')
+          .groupBy('t.id');
+
+        if (filters.fromDate) {
+            transactionQuery.andWhere('dateTime >= :fromDate', { fromDate: filters.fromDate });
+        }
+
+        if (filters.untilDate) {
+            transactionQuery.andWhere('dateTime <= :untilDate', { untilDate: filters.untilDate });
+        }
+
+        if (filters.account && !filters.category) {
+            transactionQuery.andWhere('s.account = :account', { account: filters.account });
+        }
+
+        if (filters.category && !filters.account) {
+            transactionQuery.andWhere('s.account = :category', { category: filters.category });
+        }
+
+        if (filters.account && filters.category) {
+            transactionQuery.andWhere('s.account IN (:list)', { list: [filters.account, filters.category] });
+        }
+
+        transactionQuery.orderBy('dateTime', 'ASC');
+
+        const transactions = await transactionQuery.getRawMany();
+
+        const transactionIds = transactions.map(tr => tr.id);
+        const splits = await this.splitRepository.find({ transactionId: In(transactionIds) });
+
+        return transactions.map(tr => {
+            const transaction = { ...tr, splits: [] };
+            // @ts-ignore
+            transaction.splits = splits.filter(sp => sp.transactionId === tr.id);
+            return transaction;
+        }).filter(tr => {
+            if (!filters.category || !filters.account) {
+                return true;
+            }
+            return tr.splits.filter(sp => [filters.category, filters.account].indexOf(sp.account) >= 0).length >= 2;
+        });
     }
 
     @CatchDBExceptions
@@ -47,26 +97,5 @@ export class TransactionModel {
 
         return splitEntity;
     }
-
-    /* @CatchDBExceptions
-     public async findAll(): Promise<IAccount[]> {
-
-         const query = this.accountRepository
-           .createQueryBuilder('c')
-           .addSelect('c.*')
-           .where({type: In(['CURRENT'])});
-
-         return await query.getMany();
-     }*/
-
-    /*private mapAccountToEntity(account: IAccount): Account {
-        const accountDao: Account = new Account();
-        accountDao.name = account.name;
-        accountDao.icon = account.icon;
-        accountDao.initialBalance = account.initialBalance;
-        accountDao.initialBalanceDate = account.initialBalanceDate;
-        accountDao.type = AccountTypesENUM.CURRENT;
-        return accountDao;
-    }*/
 
 }

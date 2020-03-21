@@ -2,46 +2,44 @@ import { PipeTransform, Injectable, ArgumentMetadata, BadRequestException } from
 import { InjectRepository } from '@nestjs/typeorm';
 import { Transaction } from '../../entities/transaction.entity';
 import { Repository } from 'typeorm';
-import { Category } from '../../entities/category.entity';
-import { CreateTransactionDto } from '../../DTOs/createTransaction.dto';
+import { CreateTransactionDto } from '../../DTOs/transactions/createTransaction.dto';
 
 @Injectable()
 export class CreateTransactionValidator implements PipeTransform<Transaction> {
-  constructor(@InjectRepository(Transaction)
-              private readonly transactionRepository: Repository<Transaction>,
-              @InjectRepository(Category)
-              private readonly categoryRepository: Repository<Category>) {
-  }
-
-  // noinspection JSUnusedLocalSymbols
-  async transform(value: any, { type, metatype }: ArgumentMetadata) {
-
-    if (type === 'body') {
-      const accountExists = await this.accountExists(value.account);
-      if (!accountExists) {
-        throw new BadRequestException('Account does not exists');
-      }
-
-      const categoryExists = await this.categoryExists(value.category);
-      if (!categoryExists) {
-        throw new BadRequestException('Category does not exists');
-      }
+    constructor(@InjectRepository(Transaction)
+                private readonly transactionRepository: Repository<Transaction>,
+    ) {
     }
 
-    return value;
-  }
+    // noinspection JSUnusedLocalSymbols
+    async transform(value: any, { type, metatype }: ArgumentMetadata) {
 
-  private async accountExists(account: string): Promise<boolean> {
-    /*const accounts = await this.transactionRepository.find({ account });
-    return accounts.length !== 0;*/
-    return true;
-  }
+        if (type === 'body') {
+            const accountExists = await this.accountExists(value.account);
+            if (!accountExists) {
+                throw new BadRequestException('Account does not exists');
+            }
 
-  private async categoryExists(category: string): Promise<boolean> {
-    return true;
-    /*const categories = await this.categoryRepository.find({ name: category });
-    return categories.length !== 0;*/
+            const categoryExists = await this.categoryExists(value.category);
+            if (!categoryExists) {
+                throw new BadRequestException('Category does not exists');
+            }
+        }
 
-  }
+        return value;
+    }
+
+    private async accountExists(account: string): Promise<boolean> {
+        /*const accounts = await this.transactionRepository.find({ account });
+        return accounts.length !== 0;*/
+        return true;
+    }
+
+    private async categoryExists(category: string): Promise<boolean> {
+        return true;
+        /*const categories = await this.categoryRepository.find({ name: category });
+        return categories.length !== 0;*/
+
+    }
 
 }

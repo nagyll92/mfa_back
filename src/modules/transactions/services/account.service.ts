@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAccountDto } from '../DTOs/createAccount.dto';
+import { CreateAccountDto } from '../DTOs/accounts/createAccount.dto';
 import { IAccount } from '../interfaces/Account.interface';
 import { AccountModel } from '../models/account.model';
 import { ITransaction } from '../interfaces/Transaction.interface';
 import { ISplit } from '../interfaces/Split.interace';
 import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
 import { TransactionModel } from '../models/transaction.model';
-import { ListAccountsDto } from '../DTOs/listAccounts.dto';
+import { ListAccountsDto } from '../DTOs/accounts/listAccounts.dto';
 
 @Injectable()
 export class AccountService {

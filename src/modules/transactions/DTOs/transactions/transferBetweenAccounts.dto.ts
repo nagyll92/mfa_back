@@ -11,4 +11,10 @@ export class TransferBetweenAccountsDto {
 
     @IsDateString()
     dateTime: string;
+
+    @IsNotEmpty()
+    readonly from: string;
+
+    @IsNotEmpty()
+    readonly to: string;
 }

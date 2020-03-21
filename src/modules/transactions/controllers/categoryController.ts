@@ -4,11 +4,11 @@ import { Provides } from 'shared/decorators/provides.decorator';
 
 import { CategoryService } from '../services/category.service';
 import { ICategory } from '../interfaces/Category.interface';
-import { ListCategoriesDto } from '../DTOs/listCategories.dto';
-import { CreateCategoryDto } from '../DTOs/createCategory.dto';
-import { GetCategoryDto } from '../DTOs/getCategory.dto';
+import { ListCategoriesDto } from '../DTOs/categories/listCategories.dto';
+import { CreateCategoryDto } from '../DTOs/categories/createCategory.dto';
+import { GetCategoryDto } from '../DTOs/categories/getCategory.dto';
 import { ITransaction } from '../interfaces/Transaction.interface';
-import { CategoryTransactionsDto } from '../DTOs/categoryTransactions.dto';
+import { CategoryTransactionsDto } from '../DTOs/categories/categoryTransactions.dto';
 import { CategoryTypesENUM } from 'shared/enums/AccountTypesENUM';
 
 @Controller('categories')

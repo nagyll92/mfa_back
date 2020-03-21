@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { TransactionModel } from '../models/transaction.model';
+import { ITransaction } from '../interfaces/Transaction.interface';
+import { ISplit } from '../interfaces/Split.interace';
+import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
+import { GetTransactionQueryParamsInterface } from '../interfaces/getTransactionQueryParams.interface';
 
 @Injectable()
 export class TransactionService {
@@ -9,8 +13,71 @@ export class TransactionService {
     ) {
     }
 
-    public async createTransaction(transaction) {
-        console.log('trans.serv transaction: ', transaction);
+    public async findAll(filters: GetTransactionQueryParamsInterface) {
+        return await this.transactionModel.findAll(filters);
+    }
+
+    public async createIncome(transaction) {
+        const { account, amount, category, dateTime, description } = transaction;
+        const transactionRequest: ITransaction = {
+            dateTime,
+            description,
+        };
+        const accountSplit: ISplit = {
+            amount,
+            account,
+            type: TransactionTypeENUM.DEBIT,
+        };
+
+        const incomeSplit: ISplit = {
+            amount,
+            account: category,
+            type: TransactionTypeENUM.DEBIT,
+        };
+
+        return this.transactionModel.create(transactionRequest, [accountSplit, incomeSplit]);
+    }
+
+    public async createExpense(transaction) {
+        const { account, amount, category, dateTime, description } = transaction;
+        const transactionRequest: ITransaction = {
+            dateTime,
+            description,
+        };
+        const accountSplit: ISplit = {
+            amount,
+            account,
+            type: TransactionTypeENUM.CREDIT,
+        };
+
+        const expenseSplit: ISplit = {
+            amount,
+            account: category,
+            type: TransactionTypeENUM.DEBIT,
+        };
+
+        return this.transactionModel.create(transactionRequest, [accountSplit, expenseSplit]);
+    }
+
+    public async createTransfer(transaction) {
+        const { from, amount, to, dateTime, description } = transaction;
+        const transactionRequest: ITransaction = {
+            dateTime,
+            description,
+        };
+        const fromSplit: ISplit = {
+            amount,
+            account: from,
+            type: TransactionTypeENUM.CREDIT,
+        };
+
+        const toSplit: ISplit = {
+            amount,
+            account: to,
+            type: TransactionTypeENUM.DEBIT,
+        };
+
+        return this.transactionModel.create(transactionRequest, [fromSplit, toSplit]);
     }
 
     /*  public async deleteTransaction(transactionId: number) {

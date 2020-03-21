@@ -125,8 +125,127 @@ const start = () => {
 };
 
 
+const createIncomes = () => {
+  const incomes = [
+    {
+      account: 'Cash',
+      amount: 1500,
+      dateTime: '2020-01-15T09:02:13.172Z',
+      category: 'Salary',
+      description: 'Salary in January',
+    },
+    {
+      account: 'Cash',
+      amount: 1700,
+      dateTime: '2020-02-16T09:02:13.172Z',
+      category: 'Salary',
+      description: 'Salary in February',
+    },
+    {
+      account: 'Revolut',
+      amount: 100,
+      dateTime: '2020-02-09T09:02:13.172Z',
+      category: 'From Credit',
+      description: 'Rafi kartyarol',
+    },
+    {
+      account: 'Cash',
+      amount: 1100,
+      dateTime: '2020-03-13T09:02:13.172Z',
+      category: 'Salary',
+      description: 'Salary in March',
+    },
+  ];
+
+  const promises = incomes.map(income => {
+    return request('transactions/income', 'POST', income);
+  });
+
+  return Promise.all(promises).then(results => {
+    return results;
+  });
+};
+
+const createExpenses = () => {
+  const expenses = [
+    {
+      account: 'Cash',
+      amount: 250,
+      dateTime: '2020-01-18T09:02:13.172Z',
+      category: 'Fuel',
+      description: 'Tankolas januarban',
+    },
+    {
+      account: 'Cash',
+      amount: 350,
+      dateTime: '2020-02-21T09:02:13.172Z',
+      category: 'Fuel',
+      description: 'Tankolas Februarban',
+    },
+    {
+      account: 'Cash',
+      amount: 1350,
+      dateTime: '2020-03-11T09:02:13.172Z',
+      category: 'Repair',
+      description: 'Auto javitas',
+    },
+    {
+      account: 'Revolut',
+      amount: 19,
+      dateTime: '2020-02-15T09:02:13.172Z',
+      category: 'Smoke',
+      description: 'Cigim',
+    },
+    {
+      account: 'Revolut',
+      amount: 19,
+      dateTime: '2020-03-13T09:02:13.172Z',
+      category: 'Smoke',
+      description: 'Cigim 2',
+    },
+  ];
+
+  const promises = expenses.map(expense => {
+    return request('transactions/expense', 'POST', expense);
+  });
+
+  return Promise.all(promises).then(results => {
+    return results;
+  });
+};
+
+const createTransfers = () => {
+  const transfers = [
+    {
+      from: 'Cash',
+      to: 'Revolut',
+      amount: 500,
+      dateTime: '2020-01-22T09:02:13.172Z',
+      description: 'Topup januarban',
+    },
+    {
+      from: 'Cash',
+      to: 'Revolut',
+      amount: 200,
+      dateTime: '2020-02-25T09:02:13.172Z',
+      description: 'Topup februarban',
+    },
+  ];
+
+  const promises = transfers.map(transfer => {
+    return request('transactions/transfer', 'POST', transfer);
+  });
+
+  return Promise.all(promises).then(results => {
+    return results;
+  });
+};
+
 start()
-  //.then(() => createAccounts())
-  //.then(() => createCategories())
-  .then(()=> createSubCategories());
+  .then(() => createAccounts())
+  .then(() => createCategories())
+  .then(() => createSubCategories())
+  .then(() => createIncomes())
+  .then(() => createTransfers())
+  .then(() => createExpenses());
 

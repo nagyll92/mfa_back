@@ -1,4 +1,4 @@
-import { IAccount } from '../interfaces/Account.interface';
+import { IAccount } from '../../interfaces/Account.interface';
 import { Expose } from 'class-transformer';
 
 export class GetAccountDto implements IAccount {

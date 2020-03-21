@@ -1,4 +1,4 @@
-import { ITransaction } from '../interfaces/Transaction.interface';
+import { ITransaction } from '../../interfaces/Transaction.interface';
 import { Expose } from 'class-transformer';
 import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
 

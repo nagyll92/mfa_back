@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCategoryDto } from '../DTOs/createCategory.dto';
+import { CreateCategoryDto } from '../DTOs/categories/createCategory.dto';
 import { ICategory } from '../interfaces/Category.interface';
 import { CategoryModel } from '../models/category.model';
 import { CategoryTypesENUM } from 'shared/enums/AccountTypesENUM';

@@ -12,13 +12,12 @@ import {
 } from '@nestjs/common';
 import { TransformProvidedInterceptor } from 'shared/interceptors/transformProvided.interceptor';
 import { AccountService } from '../services/account.service';
-import { CreateAccountDto } from '../DTOs/createAccount.dto';
-import { ListAccountsDto } from '../DTOs/listAccounts.dto';
+import { CreateAccountDto } from '../DTOs/accounts/createAccount.dto';
+import { ListAccountsDto } from '../DTOs/accounts/listAccounts.dto';
 import { Provides } from 'shared/decorators/provides.decorator';
 import { IAccount } from '../interfaces/Account.interface';
-import { GetAccountDto } from '../DTOs/getAccount.dto';
-import { UpdateAccountDto } from '../DTOs/updateAccount.dto';
-import { TransferBetweenAccountsDto } from '../DTOs/transferBetweenAccounts.dto';
+import { GetAccountDto } from '../DTOs/accounts/getAccount.dto';
+import { UpdateAccountDto } from '../DTOs/accounts/updateAccount.dto';
 import { AccountExistsValidator } from '../validators/account/AccountExists.validator';
 
 @Controller('accounts')

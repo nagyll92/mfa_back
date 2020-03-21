@@ -1,4 +1,4 @@
-import { IAccount } from '../interfaces/Account.interface';
+import { IAccount } from '../../interfaces/Account.interface';
 import { IsDateString, IsNotEmpty, MinLength } from 'class-validator';
 
 export class UpdateAccountDto implements IAccount {

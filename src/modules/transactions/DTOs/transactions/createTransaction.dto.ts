@@ -1,6 +1,5 @@
 import { IsDateString, IsNotEmpty, IsNumber, MinLength } from 'class-validator';
-import { ITransaction } from '../interfaces/Transaction.interface';
-
+import { ITransaction } from '../../interfaces/Transaction.interface';
 
 export class CreateTransactionDto implements Partial<ITransaction> {
 

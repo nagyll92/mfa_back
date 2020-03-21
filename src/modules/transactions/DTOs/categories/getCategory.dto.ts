@@ -1,4 +1,4 @@
-import { ICategory } from '../interfaces/Category.interface';
+import { ICategory } from '../../interfaces/Category.interface';
 import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
 import { Expose } from 'class-transformer';
 
