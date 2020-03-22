@@ -1,4 +1,4 @@
-import { IsDateString, IsNotEmpty, IsNumber, MinLength } from 'class-validator';
+import { IsISO8601, IsNotEmpty, IsNumber, MinLength } from 'class-validator';
 import { ITransaction } from '../../interfaces/Transaction.interface';
 
 export class CreateTransactionDto implements Partial<ITransaction> {
@@ -13,7 +13,7 @@ export class CreateTransactionDto implements Partial<ITransaction> {
     @IsNotEmpty()
     readonly category: string;
 
-    @IsDateString()
+    @IsISO8601()
     readonly dateTime: string;
 
     @MinLength(0)

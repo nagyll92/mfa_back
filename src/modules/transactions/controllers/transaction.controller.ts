@@ -27,6 +27,7 @@ export class TransactionController {
 
     @Post('/income')
     public async createIncome(@Body() transaction: CreateTransactionDto) {
+       // console.log('tr', transaction);
         return this.transactionService.createIncome(transaction);
     }
 

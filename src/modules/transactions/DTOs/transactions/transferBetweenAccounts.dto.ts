@@ -1,4 +1,4 @@
-import { IsDateString, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { IsISO8601, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class TransferBetweenAccountsDto {
 
@@ -9,7 +9,7 @@ export class TransferBetweenAccountsDto {
     @IsNotEmpty()
     amount: number;
 
-    @IsDateString()
+    @IsISO8601()
     dateTime: string;
 
     @IsNotEmpty()

@@ -16,7 +16,7 @@ export class Account extends EntityBoilerplate<IAccount, Account> implements IAc
   @Column({ type: 'float', default: 0 })
   initialBalance: number = 0;
 
-  @Column({ type: 'datetime', nullable: true })
+  @Column({ type: 'date', nullable: true })
   initialBalanceDate: string = undefined;
 
   @Column()

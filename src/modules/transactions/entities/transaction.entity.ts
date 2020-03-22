@@ -7,7 +7,7 @@ export class Transaction extends EntityBoilerplate<ITransaction, Transaction> im
     @PrimaryGeneratedColumn()
     id: number = undefined;
 
-    @Column({ type: 'datetime' })
+    @Column({ type: 'date' })
     dateTime: string = undefined;
 
     @Column({ length: 500 })

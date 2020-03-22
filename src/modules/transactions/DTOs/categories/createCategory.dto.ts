@@ -1,6 +1,5 @@
 import { IsEnum, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
 import { ICategory } from '../../interfaces/Category.interface';
-import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
 import { CategoryTypesENUM } from 'shared/enums/AccountTypesENUM';
 
 export class CreateCategoryDto implements ICategory {

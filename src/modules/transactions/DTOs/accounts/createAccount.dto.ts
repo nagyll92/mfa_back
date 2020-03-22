@@ -1,5 +1,5 @@
 import { IAccount } from '../../interfaces/Account.interface';
-import { IsDateString, IsNotEmpty, MinLength } from 'class-validator';
+import { IsISO8601, IsNotEmpty, MinLength } from 'class-validator';
 
 export class CreateAccountDto implements IAccount {
 
@@ -10,7 +10,7 @@ export class CreateAccountDto implements IAccount {
     @IsNotEmpty()
     initialBalance: number;
 
-    @IsDateString()
+    @IsISO8601()
     initialBalanceDate: string;
 
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, NotFoundException, NotImplementedException, Param, Post, Put, Query, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Query, UseInterceptors } from '@nestjs/common';
 import { TransformProvidedInterceptor } from 'shared/interceptors/transformProvided.interceptor';
 import { Provides } from 'shared/decorators/provides.decorator';
 
@@ -7,8 +7,6 @@ import { ICategory } from '../interfaces/Category.interface';
 import { ListCategoriesDto } from '../DTOs/categories/listCategories.dto';
 import { CreateCategoryDto } from '../DTOs/categories/createCategory.dto';
 import { GetCategoryDto } from '../DTOs/categories/getCategory.dto';
-import { ITransaction } from '../interfaces/Transaction.interface';
-import { CategoryTransactionsDto } from '../DTOs/categories/categoryTransactions.dto';
 import { CategoryTypesENUM } from 'shared/enums/AccountTypesENUM';
 
 @Controller('categories')
