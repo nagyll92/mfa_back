@@ -11,4 +11,10 @@ export class Split {
 
     @Expose()
     amount: number;
+
+    @Expose()
+    memo: string;
+
+    @Expose()
+    accountType: string;
 }

@@ -53,12 +53,18 @@ export class TransactionModel {
         const transactions = await transactionQuery.getRawMany();
 
         const transactionIds = transactions.map(tr => tr.id);
-        const splits = await this.splitRepository.find({ transactionId: In(transactionIds) });
+        const splits = await this.splitRepository.find({
+            where: { transactionId: In(transactionIds) },
+            relations: ['account'],
+        });
 
         return transactions.map(tr => {
             const transaction = { ...tr, splits: [] };
             // @ts-ignore
-            transaction.splits = splits.filter(sp => sp.transactionId === tr.id);
+            transaction.splits = splits.filter(sp => sp.transactionId === tr.id).map(split => {
+                const { type, amount, memo, account } = split;
+                return { type, amount, memo, accountType: account.type, account: account.name };
+            });
             return transaction;
         }).filter(tr => {
             if (!filters.category || !filters.account) {
