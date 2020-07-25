@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 import { ICategory } from '../../interfaces/Category.interface';
-import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
+import { SplitTypeENUM } from 'shared/enums/SplitTypeENUM';
 import { CategoryTypesENUM } from 'shared/enums/AccountTypesENUM';
 
 export class ListCategoriesDto implements ICategory {

@@ -1,6 +1,6 @@
 import { ITransaction } from '../../interfaces/Transaction.interface';
 import { Expose } from 'class-transformer';
-import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
+import { SplitTypeENUM } from 'shared/enums/SplitTypeENUM';
 
 export class CategoryTransactionsDto implements ITransaction {
 
@@ -11,7 +11,7 @@ export class CategoryTransactionsDto implements ITransaction {
   account: string;
 
   @Expose()
-  type: TransactionTypeENUM;
+  type: SplitTypeENUM;
 
   @Expose()
   amount: number;

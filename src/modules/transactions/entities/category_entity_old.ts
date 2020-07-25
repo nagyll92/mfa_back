@@ -1,7 +1,7 @@
 import { Column, Entity, Index, PrimaryColumn, Unique } from 'typeorm';
 import { ICategory } from '../interfaces/Category.interface';
 import { EntityBoilerplate } from 'shared/boilerplates/Entity.boilerplate';
-import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
+import { SplitTypeENUM } from 'shared/enums/SplitTypeENUM';
 
 @Entity('categories')
 export class Category /*extends EntityBoilerplate<ICategory, Category> implements ICategory*/ {

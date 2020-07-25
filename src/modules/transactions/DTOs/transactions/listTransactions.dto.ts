@@ -1,5 +1,6 @@
 import { Expose, Type } from 'class-transformer';
 import { Split } from './transactionSplit.dto';
+import { TransactionTypesENUM } from 'shared/enums/TransactionTypesENUM';
 
 export class ListTransactionsDto {
 
@@ -11,6 +12,9 @@ export class ListTransactionsDto {
 
     @Expose()
     description: string;
+
+    @Expose()
+    type: TransactionTypesENUM;
 
     @Expose()
     @Type(() => Split)

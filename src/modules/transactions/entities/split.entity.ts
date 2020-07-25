@@ -1,6 +1,6 @@
 import { EntityBoilerplate } from 'shared/boilerplates/Entity.boilerplate';
 import { ISplit } from '../interfaces/Split.interace';
-import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
+import { SplitTypeENUM } from 'shared/enums/SplitTypeENUM';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Account } from './account.entity';
 import { Transaction } from './transaction.entity';
@@ -25,10 +25,10 @@ export class Split extends EntityBoilerplate<ISplit, Split> implements ISplit {
 
     @Column({
         type: 'enum',
-        enum: TransactionTypeENUM,
-        default: TransactionTypeENUM.CREDIT,
+        enum: SplitTypeENUM,
+        default: SplitTypeENUM.CREDIT,
     })
-    type: TransactionTypeENUM = undefined;
+    type: SplitTypeENUM = undefined;
 
     @Column({ length: 500, nullable: true })
     memo: string = undefined;

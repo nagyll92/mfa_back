@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query, UseInterceptors } from '@nestjs/common';
 import { TransformProvidedInterceptor } from 'shared/interceptors/transformProvided.interceptor';
 import { TransactionService } from '../services/transaction.service';
 import { CreateTransactionDto } from '../DTOs/transactions/createTransaction.dto';
@@ -27,8 +27,12 @@ export class TransactionController {
 
     @Post('/income')
     public async createIncome(@Body() transaction: CreateTransactionDto) {
-       // console.log('tr', transaction);
         return this.transactionService.createIncome(transaction);
+    }
+
+    @Delete('/income:id')
+    public async deleteIncome(@Param('id') transactionId: number){
+        console.log('transaction to be deleted', transactionId);
     }
 
     @Post('/expense')

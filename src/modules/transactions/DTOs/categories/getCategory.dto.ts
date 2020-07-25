@@ -1,4 +1,4 @@
-import { TransactionTypeENUM } from 'shared/enums/TransactionTypeENUM';
+import { SplitTypeENUM } from 'shared/enums/SplitTypeENUM';
 import { Expose } from 'class-transformer';
 
 export class GetCategoryDto {
@@ -12,5 +12,5 @@ export class GetCategoryDto {
   parent: any;
 
   @Expose()
-  type: TransactionTypeENUM;
+  type: SplitTypeENUM;
 }

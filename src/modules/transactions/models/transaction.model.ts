@@ -7,6 +7,8 @@ import { Split } from '../entities/split.entity';
 import { ITransaction } from '../interfaces/Transaction.interface';
 import { ISplit } from '../interfaces/Split.interace';
 import { GetTransactionQueryParamsInterface } from '../interfaces/getTransactionQueryParams.interface';
+import { TransactionTypesENUM } from 'shared/enums/TransactionTypesENUM';
+import { AccountTypesENUM } from 'shared/enums/AccountTypesENUM';
 
 @Injectable()
 export class TransactionModel {
@@ -50,7 +52,7 @@ export class TransactionModel {
 
         transactionQuery.orderBy('dateTime', 'ASC');
 
-        const transactions = await transactionQuery.getRawMany();
+        const transactions = await transactionQuery.getMany();
 
         const transactionIds = transactions.map(tr => tr.id);
         const splits = await this.splitRepository.find({
@@ -59,12 +61,21 @@ export class TransactionModel {
         });
 
         return transactions.map(tr => {
-            const transaction = { ...tr, splits: [] };
-            // @ts-ignore
-            transaction.splits = splits.filter(sp => sp.transactionId === tr.id).map(split => {
+            const transaction = { ...tr, splits: [], type: TransactionTypesENUM.TRANSFER };
+            transaction.splits = splits.filter(sp => +sp.transactionId === tr.id).map(split => {
                 const { type, amount, memo, account } = split;
+                if (account.type === AccountTypesENUM.EXPENSE) {
+                    transaction.type = TransactionTypesENUM.EXPENSE;
+                }
+
+                if (account.type === AccountTypesENUM.INCOME) {
+                    transaction.type = TransactionTypesENUM.INCOME;
+                }
+
                 return { type, amount, memo, accountType: account.type, account: account.name };
             });
+
+
             return transaction;
         }).filter(tr => {
             if (!filters.category || !filters.account) {

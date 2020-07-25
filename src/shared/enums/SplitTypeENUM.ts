@@ -1,4 +1,4 @@
-export enum TransactionTypeENUM {
+export enum SplitTypeENUM {
   CREDIT = 'CREDIT',
   DEBIT = 'DEBIT'
 }

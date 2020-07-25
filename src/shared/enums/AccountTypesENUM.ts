@@ -17,10 +17,4 @@ type excludedOptions =
 
 export type CategoryTypesENUM = Exclude<AccountTypesENUM, excludedOptions>;
 
-/*
-export enum CategoryTypesENUM {
-  EXPENSE = 'EXPENSE',
-  INCOME = 'INCOME'
-}//= Exclude<AccountTypesENUM, excludedOptions>;
-*/
 
